@@ -397,7 +397,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         debugPrint('Gideon test 4');
       },
       verificationFailed: (FirebaseAuthException error) {
-        debugPrint('Gideon test 5' + error.message);
+        debugPrint('Gideon test 5' + error.message.toString());
         setState(() {
           isLoading = false;
         });

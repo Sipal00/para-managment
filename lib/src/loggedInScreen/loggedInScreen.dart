@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:para/src/loginScreen/loginScreen.dart';
 
-
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 var userName = '';
@@ -35,12 +34,13 @@ class _LoggedInScreenState extends State<LoggedInScreen> {
         children: [
           Text(
             'Welcome ' + userName,
-            style: TextStyle(fontSize: 30),
+            style: const TextStyle(fontSize: 30),
           ),
           Text('(phonenumber: ' +
               (_auth.currentUser!.phoneNumber != null
-                  ? _auth.currentUser!.phoneNumber
-                  : '') +
+                      ? _auth.currentUser!.phoneNumber
+                      : '')
+                  .toString() +
               ' uid:' +
               (_auth.currentUser!.uid != null ? _auth.currentUser!.uid : '') +
               ')'),
@@ -58,8 +58,8 @@ class _LoggedInScreenState extends State<LoggedInScreen> {
   Future getUser() async {
     if (_auth.currentUser != null) {
       var cellNumber = _auth.currentUser!.phoneNumber;
-      cellNumber =
-          '0' + _auth.currentUser!.phoneNumber!.substring(3, cellNumber!.length);
+      cellNumber = '0' +
+          _auth.currentUser!.phoneNumber!.substring(3, cellNumber!.length);
       debugPrint(cellNumber);
       await _firestore
           .collection('users')
@@ -77,7 +77,9 @@ class _LoggedInScreenState extends State<LoggedInScreen> {
 
   signOut() {
     //redirect
-    _auth.signOut().then((value) => Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => const LoginScreen())));
+    _auth.signOut().then((value) => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => const LoginScreen())));
   }
 }
